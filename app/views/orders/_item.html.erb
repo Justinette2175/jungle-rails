@@ -4,6 +4,9 @@
   <% item_total = product.price * quantity %>
   <% @cart_total += item_total %>
 
+
+        <% @cart_total = 0 %>
+        <% cart.each do |product_id, details| %>
   <tr>
     <td>
       <%= image_tag product.image.tiny %>
