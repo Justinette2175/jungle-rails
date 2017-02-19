@@ -1,5 +1,8 @@
 class Product < ActiveRecord::Base
 
+  has_many :review
+  accepts_nested_attributes_for :review
+
   monetize :price_cents, numericality: true
   mount_uploader :image, ProductImageUploader
 

@@ -8,6 +8,8 @@
 
     <div class="row">
 
+
+
       <div class="col-sm-4">
         <%= image_tag @product.image.url, class: 'main-img' %>
       </div>
@@ -25,7 +27,32 @@
         </dl>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-4">
+        <%= form_for [@product, @review] do |f| %>
+          <%= f.fields_for :review do |ff| %>
+            <%= f.label :description %>
+            <%= f.text_area :description %>
+            <%=f.label :rating %>
+            <%= f.select(:rating, options_for_select([['1/5', 1],['2/5', 2],['3/5', 3],['4/5', 4],['5/5', 5]]))%>
+            <%= f.submit("Submit") %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-4">
+        <% @reviews.each do |review| %>
+          <div class="review">
+            <ul>
+              <li class="name"><span>By</span><%= review.user.first_name%> <%= review.user.last_name%></li>
+              <li class="description"><%= review.description %></li>
+              <li class="rating"><%= review.rating %> / 5</li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </article>
 
 </section>
