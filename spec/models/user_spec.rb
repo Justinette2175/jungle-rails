@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
         expect(@no_first_name.errors.full_messages.include?("First name can't be blank")).to eql true
       end
     end
-     describe 'last_name' do
+    describe 'last_name' do
       it "should be present upon new user" do
         @no_last_name = User.new(first_name: "Sophie", last_name: "", email:"sophie@hello.com", password: "sophie", password_confirmation: "sophie")
         @no_last_name.save
@@ -55,8 +55,18 @@ RSpec.describe User, type: :model do
     end
 
     describe ".authenticate_with_credentials" do
-      it "should authenticate users" do
+      it "should authenticate valid users" do
         test_user = User.authenticate_with_credentials("sophie@hello.com", "sophie")
+        tested_user = User.find_by(email: "sophie@hello.com")
+        expect(test_user).to eql tested_user
+      end
+      it "should be case insensitive" do
+        test_user = User.authenticate_with_credentials("sophie@HELLO.com", "sophie")
+        tested_user = User.find_by(email: "sophie@hello.com")
+        expect(test_user).to eql tested_user
+      end
+      it "should ignore white space" do
+        test_user = User.authenticate_with_credentials("sophie@hello.com  ", "sophie")
         tested_user = User.find_by(email: "sophie@hello.com")
         expect(test_user).to eql tested_user
       end
