@@ -28,7 +28,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
-          <li>Signed in as <%= current_user.first_name %> <%= current_user.last_name %></li>
+          <li class="nav-user">Signed in as <%= current_user.first_name %> <%= current_user.last_name %></li>
           <li><%= link_to "Logout", '/logout' %></li>
         <% else %>
           <li><%= link_to 'Register', [:signup]%></li>
