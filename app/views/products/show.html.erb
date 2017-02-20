@@ -49,6 +49,11 @@
               <li class="name"><span>By </span><%= review.user.first_name%> <%= review.user.last_name%></li>
               <li class="description"><%= review.description %></li>
               <li class="rating"><%= review.rating %> / 5</li>
+              <% if session[:user_id] == review.user_id %>
+                <li>
+                  <%= link_to fa_icon('trash'), [@product, review], method: :delete, data: {confirm: "Are you sure?"}%>
+                </li>
+              <% end %>
             </ul>
           </div>
         <% end %>
