@@ -1,8 +1,25 @@
 class ReviewsController < ApplicationController
+
+  before_filter :authorize
+
   def create
-    @review = Review.new
-    @id = @review.product_id
+    @review = Review.new(review_params)
+    if @current_user
+      @review.user = @current_user
+    else
+      @review.user = User.new(:first_name => "anonymous")
+    end
     @review.save
-    redirect_to :back, notice: 'Review created!'
+    if @review.save!
+      redirect_to :back, notice: 'Review created!'
+    else
+      puts "review was not saved"
+    end
+  end
+
+  private
+
+  def review_params
+    params.require(:review).permit(:product_id, :description, :rating)
   end
 end
