@@ -53,5 +53,13 @@ RSpec.describe User, type: :model do
         expect(@no_email.errors.full_messages.include?("Email can't be blank")).to eql true
       end
     end
+
+    describe ".authenticate_with_credentials" do
+      it "should authenticate users" do
+        test_user = User.authenticate_with_credentials("sophie@hello.com", "sophie")
+        tested_user = User.find_by(email: "sophie@hello.com")
+        expect(test_user).to eql tested_user
+      end
+    end
   end
 end
